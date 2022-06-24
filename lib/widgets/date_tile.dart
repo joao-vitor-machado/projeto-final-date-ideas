@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../model/Date.dart';
+import '../model/date.dart';
 import '../view/date_dialog.dart';
 
 class DateTile extends StatelessWidget {
