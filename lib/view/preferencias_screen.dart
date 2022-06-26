@@ -16,336 +16,97 @@ class PreferenciasScreen extends StatelessWidget {
   final RadioButton radioButton1 = RadioButton();
   final RadioButton radioButton2 = RadioButton();
   final DropDown dropDown = const DropDown();
-  //final RadioButtonBloc radioButtonBloc = RadioButtonBloc(RadioButtonState());
 
   @override
   Widget build(BuildContext context) {
-    //RadioButtonBloc bloc = BlocProvider.of<RadioButtonBloc>(context);
     final tema = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         foregroundColor: tema.primary,
         elevation: 0,
-        // actions: [
-        //   GestureDetector(
-        //   onTap: () => Navigator.pop(context),
-        //   child: Icon(Icons.arrow_back, color: tema.primary,))
-        // ],
       ),
       body: Container(
           padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
           child: ListView(children: [
-            Container(
-                child: Text(
-              "Suas Preferências",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40,
-                  color: tema.primary),
-            )),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-                child: Text("Salgados",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: tema.primary))),
-            const SizedBox(
-              height: 10,
-            ),
+            titulo(context, "Suas Preferências"),
+            topicos(context, "Salgados"),
             Container(
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Salgadinhos",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Comida Congelada",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Fast Food",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Comida Árabe",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Comida Japonesa",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Comida Italiana",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Pizza",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
+                  subtopicos(context, "Salgadinho"),
+                  subtopicos(context, "Hamburguer"),
+                  subtopicos(context, "Pizza"),
+                  subtopicos(context, "Comida Japonesa"),
+                  subtopicos(context, "Comida Italiana"),
+                  subtopicos(context, "Comida Árabe"),
                 ],
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            Container(
-              child: Text("Bebidas Alcoolicas?",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: tema.primary)),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
+            topicos(context, "Bebidas Alcoolicas?"),
             Container(
               child: radioButton1,
             ),
-            /*Radio(
-              value: true,
-              groupValue: radioButton.alcohol,
-              onChanged: (value) {
-                if (value == true) {
-                  bloc.add(Enabled());
-                } else {
-                  bloc.add(Disabled());
-                }
-              },
-            ),*/
             const SizedBox(
               height: 20,
             ),
-            Container(
-                child: Text("Bebidas",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: tema.primary))),
-            const SizedBox(
-              height: 10,
-            ),
+            topicos(context, "Bebidas"),
             Container(
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Água",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Suco",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Refrigerante",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  //bebidas alcoolicas aqui
-                  /*BlocBuilder<RadioButtonBloc, RadioButtonState>(
-                      builder: (context, state) {
-                    RadioButtonBloc bloc =
-                        BlocProvider.of<RadioButtonBloc>(context);
-                    return radioButton.alcohol == Alcohol.sim
-                        ? enableCheckBox()
-                        : const SizedBox(
-                            height: 20,
-                          );
-                    /*Radio(
-                      value: true,
-                      groupValue: radioButton.alcohol,
-                      onChanged: (value) {
-                        if (value == true) {
-                          bloc.add(Enabled());
-                        } else {
-                          bloc.add(Disabled());
-                        }
-                      },
-                    );*/
-                  }),*/
+                  subtopicos(context, "Água"),
+                  subtopicos(context, "Suco"),
+                  subtopicos(context, "Refrigerante"),
+                  enableCheckBox(context)
                 ],
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            Container(
-                child: Text("Doces",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: tema.primary))),
-            const SizedBox(
-              height: 10,
-            ),
+            topicos(context, "Doces"),
             Container(
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Chocolate",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Sorvete",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Brownie",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Cookie",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Açaí",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Bolo",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
+                  subtopicos(context, "Chocolate"),
+                  subtopicos(context, "Brownie"),
+                  subtopicos(context, "Cookies"),
+                  subtopicos(context, "Sorvete"),
+                  subtopicos(context, "Açaí"),
+                  subtopicos(context, "Bolo"),
                 ],
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            Container(
-                child: Text("Atividades",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: tema.primary))),
-            const SizedBox(
-              height: 10,
-            ),
+            topicos(context, "Atividades"),
             Container(
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Ver Filmes",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Ver Séries",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Ver Animes",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Passear no Parque",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Fazer Compras",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(scale: 0.8, child: checkBox),
-                      const Text("Ir ao Cinema",
-                          style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
-                  ),
+                  subtopicos(context, "Assistir Filme"),
+                  subtopicos(context, "Assistir Série"),
+                  subtopicos(context, "Assistir Anime"),
+                  subtopicos(context, "Ir ao Parque"),
+                  subtopicos(context, "Ir ao Cinema"),
+                  subtopicos(context, "Ir a um Restaurante"),
                 ],
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            Container(
-                child: Text("Escolher Gênero?",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: tema.primary))),
-            const SizedBox(
-              height: 10,
-            ),
+            topicos(context, "Escolher Gênero?"),
             Container(
               child: radioButton2,
             ),
             const SizedBox(
               height: 20,
             ),
-            Container(
-                child: Text("Gêneros Favoritos",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: tema.primary))),
-            const SizedBox(
-              height: 10,
-            ),
+            topicos(context, "Gêneros Favoritos"),
             Container(
               child: dropDown,
             ),
@@ -360,30 +121,66 @@ class PreferenciasScreen extends StatelessWidget {
     );
   }
 
-  Widget enableCheckBox() {
+  Widget titulo(BuildContext context, String texto) {
+    final tema = Theme.of(context).colorScheme;
+
     return Column(
       children: [
-        Row(
-          children: [
-            Transform.scale(scale: 0.8, child: checkBox),
-            const Text("Cerveja",
-                style: TextStyle(fontSize: 16, color: Colors.grey)),
-          ],
+        Container(
+            child: Text(
+          texto,
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 40, color: tema.primary),
+        )),
+        const SizedBox(
+          height: 20,
         ),
-        Row(
-          children: [
-            Transform.scale(scale: 0.8, child: checkBox),
-            const Text("Whisky",
-                style: TextStyle(fontSize: 16, color: Colors.grey)),
-          ],
+      ],
+    );
+  }
+
+  Widget topicos(BuildContext context, String texto) {
+    final tema = Theme.of(context).colorScheme;
+
+    return Column(
+      children: [
+        Container(
+            child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(texto,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                  color: tema.primary)),
+        )),
+        const SizedBox(
+          height: 20,
         ),
-        Row(
-          children: [
-            Transform.scale(scale: 0.8, child: checkBox),
-            const Text("Vinho",
-                style: TextStyle(fontSize: 16, color: Colors.grey)),
-          ],
-        ),
+      ],
+    );
+  }
+
+  Widget subtopicos(BuildContext context, String texto) {
+    final tema = Theme.of(context).colorScheme;
+
+    return Row(
+      children: [
+        checkBox,
+        Container(
+            child: Text(texto,
+                style: TextStyle(fontSize: 20, color: tema.tertiary))),
+      ],
+    );
+  }
+
+  Widget enableCheckBox(BuildContext context) {
+    final tema = Theme.of(context).colorScheme;
+
+    return Column(
+      children: [
+        subtopicos(context, "Cerveja"),
+        subtopicos(context, "Vinho"),
+        subtopicos(context, "Gin&Tônica"),
         const SizedBox(
           height: 20,
         ),

@@ -24,7 +24,9 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   Container(
                       alignment: Alignment.center,
-                      child: Image.asset("assets/logo_v1.png")),
+                      //import '../model/login.dart';
+
+                      child: Image.asset('assets/logo_v1.png')),
                   Text(
                     "Snacks n' Date",
                     style: TextStyle(

@@ -32,14 +32,7 @@ class EditarPerfilScreen extends StatelessWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  Container(
-                      child: Text(
-                    "Editar Perfil",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 40,
-                        color: tema.primary),
-                  )),
+                  titulo(context, "Editar Perfil"),
                 ],
               ),
               Container(
@@ -48,45 +41,14 @@ class EditarPerfilScreen extends StatelessWidget {
                   key: formKey,
                   child: Column(
                     children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Nome",
-                          style: TextStyle(fontSize: 20, color: tema.primary),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      formField(context, "Nome"),
                       nameFormField(context),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Senha",
-                            style: TextStyle(fontSize: 20, color: tema.primary),
-                          )),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      passwordFormField(context),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Idade",
-                          style: TextStyle(fontSize: 20, color: tema.primary),
-                        ),
-                      ),
-                      //slider
+                      formField(context, "Idade"),
                       sliderBar,
-                      const SizedBox(
-                        height: 30,
-                      ),
+                      formField(context, "Username"),
+                      usernameFormField(context),
+                      formField(context, "Senha"),
+                      passwordFormField(context),
                       submitButton(context),
                     ],
                   ),
@@ -97,70 +59,119 @@ class EditarPerfilScreen extends StatelessWidget {
     );
   }
 
+  Widget titulo(BuildContext context, String texto) {
+    final tema = Theme.of(context).colorScheme;
+    return Container(
+        child: Text(
+      texto,
+      style: TextStyle(
+          fontWeight: FontWeight.bold, fontSize: 40, color: tema.primary),
+    ));
+  }
+
+  Widget formField(BuildContext context, String texto) {
+    final tema = Theme.of(context).colorScheme;
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            texto,
+            style: TextStyle(fontSize: 20, color: tema.primary),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+      ],
+    );
+  }
+
   Widget nameFormField(BuildContext context) {
     final tema = Theme.of(context).colorScheme;
-    return TextFormField(
-      keyboardType: TextInputType.name,
-      onSaved: (String? inValue) {
-        loginData.name = inValue ?? "";
-      },
-      decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-          color: tema.primary,
-        )),
-        hintText: "Example Name",
-      ),
+    return Column(
+      children: [
+        TextFormField(
+          keyboardType: TextInputType.name,
+          onSaved: (String? inValue) {
+            loginData.name = inValue ?? "";
+          },
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+              color: tema.primary,
+            )),
+            hintText: "Name",
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+      ],
     );
   }
 
   Widget usernameFormField(BuildContext context) {
     final tema = Theme.of(context).colorScheme;
-    return TextFormField(
-      keyboardType: TextInputType.name,
-      validator: (String? inValue) {
-        if (inValue != null) {
-          if (inValue.isEmpty) {
-            return "Insira um nome de usuário";
-          }
-        }
-        return null;
-      },
-      onSaved: (String? inValue) {
-        loginData.username = inValue ?? "";
-      },
-      decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-          color: tema.primary,
-        )),
-        hintText: "Username",
-      ),
+    return Column(
+      children: [
+        TextFormField(
+          keyboardType: TextInputType.name,
+          validator: (String? inValue) {
+            if (inValue != null) {
+              if (inValue.isEmpty) {
+                return "Insira um nome de usuário";
+              }
+            }
+            return null;
+          },
+          onSaved: (String? inValue) {
+            loginData.username = inValue ?? "";
+          },
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+              color: tema.primary,
+            )),
+            hintText: "Username",
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+      ],
     );
   }
 
   Widget passwordFormField(BuildContext context) {
     final tema = Theme.of(context).colorScheme;
-    return TextFormField(
-      obscureText: true,
-      validator: (String? inValue) {
-        if (inValue != null) {
-          if (inValue.length < 6) {
-            return "Mínimo de 6 letras";
-          }
-        }
-        return null;
-      },
-      onSaved: (String? inValue) {
-        loginData.password = inValue ?? "";
-      },
-      decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-          color: tema.primary,
-        )),
-        hintText: "******",
-      ),
+    return Column(
+      children: [
+        TextFormField(
+          obscureText: true,
+          validator: (String? inValue) {
+            if (inValue != null) {
+              if (inValue.length < 6) {
+                return "Mínimo de 6 letras";
+              }
+            }
+            return null;
+          },
+          onSaved: (String? inValue) {
+            loginData.password = inValue ?? "";
+          },
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+              color: tema.primary,
+            )),
+            hintText: "******",
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+      ],
     );
   }
 
