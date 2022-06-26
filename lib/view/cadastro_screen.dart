@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../model/login.dart';
 import '../widgets/slider_bar_widget.dart';
@@ -18,6 +19,7 @@ class CadastroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tema = Theme.of(context).colorScheme;
+
     return Scaffold(
       body: Container(
           padding: const EdgeInsets.fromLTRB(10, 50, 10, 0),
