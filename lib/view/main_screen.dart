@@ -1,7 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../model/mock/dates_mock.dart';
 import '../widgets/date_card.dart';
 import '../widgets/date_tile.dart';
@@ -25,7 +23,7 @@ class MainScreen extends StatelessWidget {
           indexes.add(i);
         }
       }
-      if (indexes.length > 0) {
+      if (indexes.isNotEmpty) {
         return CarouselSlider(
             options: CarouselOptions(autoPlay: false),
             items: indexes
@@ -34,7 +32,7 @@ class MainScreen extends StatelessWidget {
       } else {
         return Container(
           height: screen.height * 0.3,
-          child: Center(
+          child: const Center(
             child: Text("Nenhum date hoje ;-;"),
           ),
         );
@@ -45,83 +43,86 @@ class MainScreen extends StatelessWidget {
       showDialog(
           context: context,
           builder: (BuildContext context) {
-            return NewDateDialog();
+            return const NewDateDialog();
           });
     }
 
     return Scaffold(
-      drawer: DrawerWidget(),
+      drawer: const DrawerWidget(),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         foregroundColor: tema.primary,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0),
-                child: Text(
-                  "Olá, Fulano!",
-                  style: TextStyle(
-                      color: tema.primary,
-                      fontFamily: "Roboto",
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0),
-                child: Text(
-                  "Dates de hoje:",
-                  style: TextStyle(
-                      color: tema.primary,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700),
-                ),
-              ),
-              renderDateCards(),
-              Padding(
-                padding:
-                    const EdgeInsets.only(left: 20.0, right: 20, bottom: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Próximos Dates:",
-                      style: TextStyle(
-                          color: tema.primary,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    TextButton(
-                      onPressed: () => newDateDialog(),
-                      child: Text(
-                        "Novo Date +",
-                        style: TextStyle(color: tema.secondary),
-                      ),
-                      style: TextButton.styleFrom(
-                          backgroundColor: tema.primary,
-                          minimumSize: Size(60, 40)),
-                    )
-                  ],
-                ),
-              ),
-              Center(
-                child: Container(
-                  width: screen.width * 0.9,
-                  height: screen.height * 0.4,
-                  child: ListView(
-                    children: DateMock.dates
-                        .map((element) => DateTile(dataApp: element))
-                        .toList(),
+      body: GestureDetector(
+        onHorizontalDragEnd: (e) => const DrawerWidget(),
+        child: SingleChildScrollView(
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Text(
+                    "Olá, Fulano!",
+                    style: TextStyle(
+                        color: tema.primary,
+                        fontFamily: "Roboto",
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Text(
+                    "Dates de hoje:",
+                    style: TextStyle(
+                        color: tema.primary,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                renderDateCards(),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 20.0, right: 20, bottom: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Próximos Dates:",
+                        style: TextStyle(
+                            color: tema.primary,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700),
+                      ),
+                      TextButton(
+                        onPressed: () => newDateDialog(),
+                        child: Text(
+                          "Novo Date +",
+                          style: TextStyle(color: tema.secondary),
+                        ),
+                        style: TextButton.styleFrom(
+                            backgroundColor: tema.primary,
+                            minimumSize: Size(60, 40)),
+                      )
+                    ],
+                  ),
+                ),
+                Center(
+                  child: Container(
+                    width: screen.width * 0.9,
+                    height: screen.height * 0.4,
+                    child: ListView(
+                      children: DateMock.dates
+                          .map((element) => DateTile(dataApp: element))
+                          .toList(),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
