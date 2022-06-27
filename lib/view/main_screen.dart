@@ -12,40 +12,8 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tema = Theme.of(context).colorScheme;
     final screen = MediaQuery.of(context).size;
-
-    Widget renderDateCards() {
-      List<int> indexes = [];
-      for (int i = 0; i < DateMock.dates.length; i++) {
-        if (DateMock.dates[i].data.month == DateTime.now().month &&
-            DateMock.dates[i].data.day == DateTime.now().day) {
-          indexes.add(i);
-        }
-      }
-      if (indexes.isNotEmpty) {
-        return CarouselSlider(
-            options: CarouselOptions(autoPlay: false),
-            items: indexes
-                .map((index) => DateCard(dateApp: DateMock.dates[index]))
-                .toList());
-      } else {
-        return Container(
-          height: screen.height * 0.3,
-          child: const Center(
-            child: Text("Nenhum date hoje ;-;"),
-          ),
-        );
-      }
-    }
-
-    newDateDialog() {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return const NewDateDialog();
-          });
-    }
+    final tema = Theme.of(context).colorScheme;
 
     return Scaffold(
       drawer: const DrawerWidget(),
@@ -61,28 +29,8 @@ class MainScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Text(
-                    "Olá, Fulano!",
-                    style: TextStyle(
-                        color: tema.primary,
-                        fontFamily: "Roboto",
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Text(
-                    "Dates de hoje:",
-                    style: TextStyle(
-                        color: tema.primary,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                renderDateCards(),
+                saudacoes(context),
+                datesDeHoje(context),
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 20.0, right: 20, bottom: 8),
@@ -97,35 +45,111 @@ class MainScreen extends StatelessWidget {
                             fontSize: 24,
                             fontWeight: FontWeight.w700),
                       ),
-                      TextButton(
-                        onPressed: () => newDateDialog(),
-                        child: Text(
-                          "Novo Date +",
-                          style: TextStyle(color: tema.secondary),
-                        ),
-                        style: TextButton.styleFrom(
-                            backgroundColor: tema.primary,
-                            minimumSize: Size(60, 40)),
-                      )
+                      novoDateButton(context),
                     ],
                   ),
                 ),
-                Center(
-                  child: Container(
-                    width: screen.width * 0.9,
-                    height: screen.height * 0.4,
-                    child: ListView(
-                      children: DateMock.dates
-                          .map((element) => DateTile(dataApp: element))
-                          .toList(),
-                    ),
-                  ),
-                )
+                // Expanded(
+                //   child: Container(
+                //     child: ListView(
+                //       children: DateMock.dates
+                //           .map((element) => DateTile(dataApp: element))
+                //           .toList(),
+                //     ),
+                //   ),
+                // )
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  newDateDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const NewDateDialog();
+        });
+  }
+
+  Widget renderDateCards(BuildContext context) {
+    final screen = MediaQuery.of(context).size;
+
+    List<int> indexes = [];
+    for (int i = 0; i < DateMock.dates.length; i++) {
+      if (DateMock.dates[i].data.month == DateTime.now().month &&
+          DateMock.dates[i].data.day == DateTime.now().day) {
+        indexes.add(i);
+      }
+    }
+    if (indexes.isNotEmpty) {
+      return CarouselSlider(
+          options: CarouselOptions(autoPlay: false),
+          items: indexes
+              .map((index) => DateCard(dateApp: DateMock.dates[index]))
+              .toList());
+    } else {
+      return Container(
+        height: screen.height * 0.3,
+        child: const Center(
+          child: Text("Nenhum date hoje ;-;"),
+        ),
+      );
+    }
+  }
+
+  Widget saudacoes(BuildContext context) {
+    final tema = Theme.of(context).colorScheme;
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 20.0),
+      child: Text(
+        "Olá, Fulano!",
+        style: TextStyle(
+            color: tema.primary,
+            fontFamily: "Roboto",
+            fontSize: 40,
+            fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  Widget datesDeHoje(BuildContext context) {
+    final tema = Theme.of(context).colorScheme;
+
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20.0),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Dates de hoje:",
+              style: TextStyle(
+                  color: tema.primary,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700),
+            ),
+          ),
+        ),
+        renderDateCards(context),
+      ],
+    );
+  }
+
+  Widget novoDateButton(BuildContext context) {
+    final tema = Theme.of(context).colorScheme;
+
+    return TextButton(
+      onPressed: () => newDateDialog(context),
+      child: Text(
+        "Novo Date +",
+        style: TextStyle(color: tema.secondary),
+      ),
+      style: TextButton.styleFrom(
+          backgroundColor: tema.primary, minimumSize: Size(60, 40)),
     );
   }
 }
