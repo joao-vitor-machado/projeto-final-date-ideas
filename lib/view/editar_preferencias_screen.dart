@@ -1,7 +1,8 @@
+import 'package:date_ideas_app/widgets/widget_radio_button_generos.dart';
 import 'package:flutter/material.dart';
 import '../widgets/checkbox_widget.dart';
 import '../widgets/drop_down_widget.dart';
-import '../widgets/radio_button_widget.dart';
+import '../widgets/widget_radio_button_bebidas.dart';
 
 class EditarPreferenciasScreen extends StatelessWidget {
   static const route = "/editar_preferencias";
@@ -11,8 +12,8 @@ class EditarPreferenciasScreen extends StatelessWidget {
   EditarPreferenciasScreen({Key? key}) : super(key: key);
 
   final CheckBox checkBox = const CheckBox();
-  final RadioButton radioButton1 = RadioButton();
-  final RadioButton radioButton2 = RadioButton();
+  final RadioButtonBebidas radioButton1 = RadioButtonBebidas();
+  final RadioButtonGeneros radioButton2 = RadioButtonGeneros();
   final DropDown dropDown = const DropDown();
 
   @override

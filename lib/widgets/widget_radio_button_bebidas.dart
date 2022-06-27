@@ -1,22 +1,23 @@
+import 'package:date_ideas_app/bloc/bebidas_alcoolicas/bebidas_bloc.dart';
+import 'package:date_ideas_app/bloc/bebidas_alcoolicas/bebidas_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RadioButton extends StatefulWidget {
-  RadioButton({Key? key}) : super(key: key);
+class RadioButtonBebidas extends StatefulWidget {
+  RadioButtonBebidas({Key? key}) : super(key: key);
 
   Alcohol? _alcohol = Alcohol.sim;
   get alcohol => _alcohol;
 
   @override
   State<StatefulWidget> createState() {
-    return RadioButtonState();
+    return RadioButtonBebidasState();
   }
 }
 
 enum Alcohol { sim, nao }
 
-class RadioButtonState extends State<RadioButton> {
-  //Alcohol? _alcohol = Alcohol.sim;
-
+class RadioButtonBebidasState extends State<RadioButtonBebidas> {
   @override
   Widget build(BuildContext context) {
     final tema = Theme.of(context).colorScheme;
@@ -32,6 +33,7 @@ class RadioButtonState extends State<RadioButton> {
             onChanged: (Alcohol? value) {
               setState(() {
                 widget._alcohol = value;
+                BlocProvider.of<BebidasBloc>(context).add(OpEscolhidaSim());
               });
             },
           ),
@@ -46,6 +48,7 @@ class RadioButtonState extends State<RadioButton> {
             onChanged: (Alcohol? value) {
               setState(() {
                 widget._alcohol = value;
+                BlocProvider.of<BebidasBloc>(context).add(OpEscolhidaNao());
               });
             },
           ),

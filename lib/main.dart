@@ -1,3 +1,4 @@
+import 'package:date_ideas_app/bloc/bebidas_alcoolicas/bebidas_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/auth/auth_bloc.dart';
 import 'bloc/auth/auth_state.dart';
+import 'bloc/generos/generos_bloc.dart';
 import 'bloc/slider/slider_bloc.dart';
 import 'bloc/slider/slider_state.dart';
 import 'view/cadastro_screen.dart';
@@ -22,6 +24,8 @@ void main() async {
       create: (_) => SliderBloc(SliderState()),
     ),
     BlocProvider(create: (_) => AuthBloc()),
+    BlocProvider(create: (_) => BebidasBloc()),
+    BlocProvider(create: (_) => GenerosBloc()),
   ], child: const MyApp()));
 }
 
