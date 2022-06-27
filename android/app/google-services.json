@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "302000918604",
+    "project_id": "projeto-final-date-ideas",
+    "storage_bucket": "projeto-final-date-ideas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302000918604:android:5ff042a6d1a0e6779564e9",
+        "android_client_info": {
+          "package_name": "com.example.date_ideas_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302000918604-0g8b5iaf4ffp4aidvpt88os9tr996skl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTicq_RoV9ByLqDltQo5I_HZUI-rBNWn4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302000918604-0g8b5iaf4ffp4aidvpt88os9tr996skl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
