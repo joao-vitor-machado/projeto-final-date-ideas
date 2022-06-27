@@ -1,8 +1,5 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-
 import '../model/date.dart';
-import '../model/mock/dates_mock.dart';
 import '../view/date_dialog.dart';
 
 class DateCard extends StatelessWidget {
@@ -13,18 +10,6 @@ class DateCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context).size;
     final tema = Theme.of(context).colorScheme;
-
-    Widget dateElementsListGenerate(List<String> list) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: list
-            .map((element) => Text(
-                  element,
-                  style: TextStyle(color: tema.secondary),
-                ))
-            .toList(),
-      );
-    }
 
     return GestureDetector(
       onTap: () {
@@ -48,52 +33,20 @@ class DateCard extends StatelessWidget {
                   end: Alignment.bottomRight,
                   colors: [tema.primary, Colors.deepPurple],
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(20)),
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          dateApp.nome,
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: tema.secondary,
-                            fontFamily: "Roboto",
-                          ),
-                        )
-                      ],
-                    ),
+                    nomeDate(context),
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Column(
-                            children: [
-                              Text(
-                                "Salgados",
-                                style: TextStyle(
-                                    color: tema.secondary,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              dateElementsListGenerate(dateApp.salgados),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                "Doces",
-                                style: TextStyle(
-                                    color: tema.secondary,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              dateElementsListGenerate(dateApp.doces)
-                            ],
-                          ),
+                          salgadosList(context),
+                          docesList(context),
                         ],
                       ),
                     )
@@ -104,6 +57,66 @@ class DateCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget dateElementsListGenerate(BuildContext context, List<String> list) {
+    final tema = Theme.of(context).colorScheme;
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: list
+          .map((element) => Text(
+                element,
+                style: TextStyle(color: tema.secondary),
+              ))
+          .toList(),
+    );
+  }
+
+  Widget nomeDate(BuildContext context) {
+    final tema = Theme.of(context).colorScheme;
+
+    return Row(
+      children: [
+        Text(
+          dateApp.nome,
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: tema.secondary,
+            fontFamily: "Roboto",
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget salgadosList(BuildContext context) {
+    final tema = Theme.of(context).colorScheme;
+
+    return Column(
+      children: [
+        Text(
+          "Salgados",
+          style: TextStyle(color: tema.secondary, fontWeight: FontWeight.bold),
+        ),
+        dateElementsListGenerate(context, dateApp.salgados),
+      ],
+    );
+  }
+
+  Widget docesList(BuildContext context) {
+    final tema = Theme.of(context).colorScheme;
+
+    return Column(
+      children: [
+        Text(
+          "Doces",
+          style: TextStyle(color: tema.secondary, fontWeight: FontWeight.bold),
+        ),
+        dateElementsListGenerate(context, dateApp.doces)
+      ],
     );
   }
 }

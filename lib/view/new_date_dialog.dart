@@ -9,9 +9,6 @@ class NewDateDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tema = Theme.of(context).colorScheme;
-    final screen = MediaQuery.of(context).size;
-
-    DateTime data = DateTime.now();
 
     return SingleChildScrollView(
       child: Dialog(
@@ -27,65 +24,22 @@ class NewDateDialog extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: GestureDetector(
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                       ),
                       onTap: () => Navigator.pop(context),
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Crie seu Date",
-                    style: TextStyle(
-                      color: tema.primary,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Roboto",
-                      fontSize: 24,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Nome",
-                    style: TextStyle(fontSize: 12, color: tema.primary),
-                  ),
-                ),
+                titulo(context),
                 const SizedBox(
                   height: 20,
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      borderSide: BorderSide(color: tema.primary, width: 0.0),
-                    ),
-                    labelText: "Nome",
-                    // border: OutlineInputBorder()
-                  ),
-                ),
+                nomeField(context),
                 const SizedBox(
                   height: 20,
                 ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Data",
-                    style: TextStyle(fontSize: 12, color: tema.primary),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                DatePickerWidget(),
-                const SizedBox(
-                  height: 20,
-                ),
+                pegarData(context),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -97,76 +51,130 @@ class NewDateDialog extends StatelessWidget {
                   height: 20,
                 ),
                 Column(
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          children: [
-                            Text("Salagado"),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            NumberPickerWidget()
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text("Doces"),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            NumberPickerWidget()
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          numberPicker(context, "Salgados"),
+                          numberPicker(context, "Doces"),
+                        ]),
+                    const SizedBox(
                       height: 20,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Column(
-                          children: [
-                            Text("Bebidas"),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            NumberPickerWidget()
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text("Atividades"),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            NumberPickerWidget()
-                          ],
-                        )
+                        numberPicker(context, "Bebidas"),
+                        numberPicker(context, "Atividades"),
                       ],
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 70,
                 ),
-                TextButton(
-                    style: TextButton.styleFrom(
-                        backgroundColor: tema.primary,
-                        minimumSize: const Size(200, 50)),
-                    child: Text(
-                      "Criar",
-                      style: TextStyle(color: tema.secondary),
-                    ),
-                    onPressed: () {}),
+                buttonCriar(context),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Widget titulo(BuildContext context) {
+    final tema = Theme.of(context).colorScheme;
+
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        "Crie seu Date",
+        style: TextStyle(
+          color: tema.primary,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Roboto",
+          fontSize: 24,
+        ),
+      ),
+    );
+  }
+
+  Widget nomeField(BuildContext context) {
+    final tema = Theme.of(context).colorScheme;
+
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Nome",
+            style: TextStyle(fontSize: 12, color: tema.primary),
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        TextFormField(
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide(color: tema.primary, width: 0.0),
+            ),
+            hintText: "Meu Date",
+            // border: OutlineInputBorder()
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget pegarData(BuildContext context) {
+    final tema = Theme.of(context).colorScheme;
+
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Data",
+            style: TextStyle(fontSize: 12, color: tema.primary),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        DatePickerWidget(),
+        const SizedBox(
+          height: 20,
+        ),
+      ],
+    );
+  }
+
+  Widget numberPicker(BuildContext context, String categoria) {
+    return Column(
+      children: [
+        Text(categoria),
+        const SizedBox(
+          height: 5,
+        ),
+        const NumberPickerWidget()
+      ],
+    );
+  }
+
+  Widget buttonCriar(BuildContext context) {
+    final tema = Theme.of(context).colorScheme;
+
+    return TextButton(
+        style: TextButton.styleFrom(
+            backgroundColor: tema.primary, minimumSize: const Size(200, 50)),
+        child: Text(
+          "Criar",
+          style: TextStyle(color: tema.secondary),
+        ),
+        onPressed: () {});
   }
 }

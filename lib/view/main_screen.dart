@@ -12,7 +12,6 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screen = MediaQuery.of(context).size;
     final tema = Theme.of(context).colorScheme;
 
     return Scaffold(
@@ -49,15 +48,7 @@ class MainScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Expanded(
-                //   child: Container(
-                //     child: ListView(
-                //       children: DateMock.dates
-                //           .map((element) => DateTile(dataApp: element))
-                //           .toList(),
-                //     ),
-                //   ),
-                // )
+                dateList(context),
               ],
             ),
           ),
@@ -150,6 +141,17 @@ class MainScreen extends StatelessWidget {
       ),
       style: TextButton.styleFrom(
           backgroundColor: tema.primary, minimumSize: Size(60, 40)),
+    );
+  }
+
+  Widget dateList(BuildContext context) {
+    return Container(
+      height: 400,
+      child: ListView(
+        children: DateMock.dates
+            .map((element) => DateTile(dataApp: element))
+            .toList(),
+      ),
     );
   }
 }
