@@ -70,7 +70,7 @@ class PreferenciasScreen extends StatelessWidget {
                   BlocBuilder<BebidasBloc, BebidasState>(
                       builder: (context, state) {
                     if (state is BebidasStateSim) {
-                      return enableCheckBox(context, radioButton1.alcohol);
+                      return enableRadioButton(context, radioButton1.alcohol);
                     }
                     return Container(
                       height: 0,
@@ -199,7 +199,7 @@ class PreferenciasScreen extends StatelessWidget {
     );
   }
 
-  Widget enableCheckBox(BuildContext context, Enum radioButton) {
+  Widget enableRadioButton(BuildContext context, Enum radioButton) {
     final tema = Theme.of(context).colorScheme;
     return Column(
       children: [

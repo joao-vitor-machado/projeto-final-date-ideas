@@ -7,7 +7,7 @@ import '../bloc/generos/generos_event.dart';
 class RadioButtonGeneros extends StatefulWidget {
   RadioButtonGeneros({Key? key}) : super(key: key);
 
-  Genero? _genero = Genero.sim;
+  Genero? _genero = Genero.nao;
   get genero => _genero;
 
   @override

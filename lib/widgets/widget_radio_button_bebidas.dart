@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class RadioButtonBebidas extends StatefulWidget {
   RadioButtonBebidas({Key? key}) : super(key: key);
 
-  Alcohol? _alcohol = Alcohol.sim;
+  Alcohol? _alcohol = Alcohol.nao;
   get alcohol => _alcohol;
 
   @override

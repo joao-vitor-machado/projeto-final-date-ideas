@@ -1,5 +1,10 @@
 import 'package:date_ideas_app/widgets/widget_radio_button_generos.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../bloc/bebidas_alcoolicas/bebidas_bloc.dart';
+import '../bloc/bebidas_alcoolicas/bebidas_state.dart';
+import '../bloc/generos/generos_bloc.dart';
+import '../bloc/generos/generos_state.dart';
 import '../widgets/checkbox_widget.dart';
 import '../widgets/drop_down_widget.dart';
 import '../widgets/widget_radio_button_bebidas.dart';
@@ -89,7 +94,15 @@ class EditarPreferenciasScreen extends StatelessWidget {
                   subtopicos(context, "Água"),
                   subtopicos(context, "Suco"),
                   subtopicos(context, "Refrigerante"),
-                  enableCheckBox(context)
+                  BlocBuilder<BebidasBloc, BebidasState>(
+                      builder: (context, state) {
+                    if (state is BebidasStateSim) {
+                      return enableRadioButton(context, radioButton1.alcohol);
+                    }
+                    return Container(
+                      height: 0,
+                    );
+                  }),
                 ],
               ),
             ),
@@ -135,10 +148,21 @@ class EditarPreferenciasScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            topicos(context, "Gêneros Favoritos"),
-            Container(
-              child: dropDown,
-            ),
+            BlocBuilder<GenerosBloc, GenerosState>(builder: (context, state) {
+              if (state is GenerosStateSim) {
+                return Column(
+                  children: [
+                    topicos(context, "Gêneros Favoritos"),
+                    Container(
+                      child: dropDown,
+                    ),
+                  ],
+                );
+              }
+              return Container(
+                height: 0,
+              );
+            }),
             const SizedBox(
               height: 20,
             ),
@@ -202,7 +226,7 @@ class EditarPreferenciasScreen extends StatelessWidget {
     );
   }
 
-  Widget enableCheckBox(BuildContext context) {
+  Widget enableRadioButton(BuildContext context, Enum radioButton) {
     final tema = Theme.of(context).colorScheme;
 
     return Column(
