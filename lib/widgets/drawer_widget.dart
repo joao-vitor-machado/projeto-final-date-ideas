@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../bloc/auth/auth_bloc.dart';
+import '../bloc/auth/auth_event.dart';
 import '../view/editar_perfil_screen.dart';
 import '../view/editar_preferencias_screen.dart';
 import '../view/login_screen.dart';
@@ -52,10 +55,8 @@ class DrawerWidget extends StatelessWidget {
     ];
 
     return Container(
-      decoration: BoxDecoration(
-        color: tema.secondary,
-      ),
       width: screen.width * 0.8,
+      color: tema.secondary,
       child: Column(
         children: [
           Container(
@@ -112,39 +113,33 @@ class DrawerWidget extends StatelessWidget {
                   tiles: itemsMenu.map((e) => ListTile(title: e))).toList(),
             ),
           ),
-          // SizedBox(
-          //   height: screen.height * 0.18,
-          // ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  width: screen.width * 0.7,
-                  child: GestureDetector(
-                    onTap: () =>
-                        Navigator.pushNamed(context, LoginScreen.route),
-                    child: ListTile(
-                      title: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Logout",
-                              style:
-                                  TextStyle(color: Colors.red, fontSize: 20)),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Icon(
-                            Icons.logout,
-                            color: Colors.red,
-                          )
-                        ],
-                      ),
+          SizedBox(
+            height: screen.height * 0.18,
+          ),
+          Container(
+            width: screen.width * 0.7,
+            child: GestureDetector(
+              onTap: () {
+                BlocProvider.of<AuthBloc>(context).add(Logout());
+                Navigator.pushNamed(context, LoginScreen.route);
+              },
+              child: ListTile(
+                title: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Logout",
+                        style: TextStyle(color: Colors.red, fontSize: 20)),
+                    SizedBox(
+                      width: 5,
                     ),
-                  ),
+                    Icon(
+                      Icons.logout,
+                      color: Colors.red,
+                    )
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ],

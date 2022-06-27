@@ -1,14 +1,24 @@
+import 'package:date_ideas_app/bloc/auth/auth_bloc.dart';
+import 'package:date_ideas_app/bloc/auth/auth_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'cadastro_screen.dart';
-import 'main_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   static const route = "/";
-  const LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key? key}) : super(key: key);
+  var email = TextEditingController();
+  var password = TextEditingController();
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
+    final tema = Theme.of(context).colorScheme;
 
     return Scaffold(
       body: SafeArea(
@@ -29,7 +39,7 @@ class LoginScreen extends StatelessWidget {
                   child: Form(
                       child: Column(
                     children: [
-                      username(context),
+                      email(context),
                       SizedBox(
                         height: screen.size.height * 0.02,
                       ),
@@ -72,7 +82,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget username(BuildContext context) {
+  Widget email(BuildContext context) {
     final tema = Theme.of(context).colorScheme;
     return TextFormField(
       decoration: InputDecoration(
@@ -80,8 +90,9 @@ class LoginScreen extends StatelessWidget {
               borderSide: BorderSide(color: tema.primary),
               borderRadius: const BorderRadius.all(Radius.circular(20))),
           prefixIcon: const Icon(Icons.account_circle),
-          labelText: "username",
+          labelText: "email",
           border: const OutlineInputBorder()),
+      controller: widget.email,
     );
   }
 
@@ -96,6 +107,7 @@ class LoginScreen extends StatelessWidget {
           prefixIcon: const Icon(Icons.lock),
           labelText: "password",
           border: const OutlineInputBorder()),
+      controller: widget.password,
     );
   }
 
@@ -124,7 +136,10 @@ class LoginScreen extends StatelessWidget {
               "Login",
               style: TextStyle(color: tema.secondary),
             ),
-            onPressed: () => Navigator.pushNamed(context, MainScreen.route)),
+            onPressed: () {
+              BlocProvider.of<AuthBloc>(context).add(LoginUser(
+                  username: widget.email.text, password: widget.password.text));
+            }),
       ],
     );
   }
