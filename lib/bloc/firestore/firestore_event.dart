@@ -1,5 +1,7 @@
 import 'package:date_ideas_app/model/preferencias/Preferencias_collection.dart';
 
+import '../signUp/signup_state.dart';
+
 abstract class FirestoreEvent {}
 
 class CriarPreferencias extends FirestoreEvent {
@@ -15,3 +17,9 @@ class UpdatePreferencias extends FirestoreEvent {
 }
 
 class GetPreferencias extends FirestoreEvent {}
+
+class CriarUser extends FirestoreEvent {
+  SignupState signupState;
+
+  CriarUser({required this.signupState});
+}

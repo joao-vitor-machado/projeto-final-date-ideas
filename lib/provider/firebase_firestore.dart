@@ -25,28 +25,29 @@ class FirestoreServer {
       FirebaseFirestore.instance.collection("users");
 
   Future<PreferenciasCollection> getPreferencia() async {
-    DocumentSnapshot document = await preferencias.doc(uid).get();
+    DocumentSnapshot document = await preferencias.doc(uid! + "Pref").get();
     PreferenciasCollection preferenciasRet =
         PreferenciasCollection.fromMap(document.data());
     return preferenciasRet;
   }
 
   Future<int> inserePreferencia(PreferenciasCollection pref) async {
+    print(uid);
     await preferencias
-        .doc(uid)
+        .doc(uid! + "Pref")
         .set({"prefList": pref.preferenciasFromListToMap()});
     return 42;
   }
 
   Future<int> updatePreferencia(PreferenciasCollection pref) async {
     await preferencias
-        .doc(uid)
+        .doc(uid! + "Pref")
         .update({"prefList": pref.preferenciasFromListToMap()});
     return 42;
   }
 
-  Future<int> deletePreferencia(prefID) async {
-    await preferencias.doc(uid).delete();
+  Future<int> deletePreferencia() async {
+    await preferencias.doc(uid! + "Pref").delete();
     return 42;
   }
 
@@ -77,18 +78,22 @@ class FirestoreServer {
   // }
 
   Future<SignupData> getUser() async {
-    DocumentSnapshot doc = await users.doc(uid).get();
+    DocumentSnapshot doc = await users.doc(uid! + "User").get();
     SignupData signupData = SignupData.fromMap(doc.data());
     return signupData;
   }
 
   Future<int> insereUser(SignupState signupState) async {
-    await users.doc(uid).set({"signupList": signupState.toMap()});
+    print("AQUI" + uid!);
+    await users.doc(uid! + "User").set({
+      "nome": signupState.name,
+      "idade": signupState.age,
+    });
     return 42;
   }
 
-  Future<int> updateUser(signupId, SignupData signupData) async {
-    await users.doc(uid).update({
+  Future<int> updateUser(SignupData signupData) async {
+    await users.doc(uid! + "User").update({
       "nome": signupData.name,
       "idade": signupData.age,
     });
@@ -103,7 +108,7 @@ class FirestoreServer {
   }
 
   Future<SignupCollection> getSignupList() async {
-    DocumentSnapshot snapshot = await users.doc(uid).get();
+    DocumentSnapshot snapshot = await users.doc(uid! + "User").get();
 
     return _usersListFromSnapshot(snapshot);
   }

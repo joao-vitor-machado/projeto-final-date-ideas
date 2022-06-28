@@ -8,7 +8,7 @@ import '../preferencias/Preferencia.dart';
 
 class PreferenciasMock {
   static final List<Preferencia> preferencias = [
-    Salgado(nome: "Salgadinho", isPreferencia: true),
+    Salgado(nome: "Tortilla", isPreferencia: true),
     Salgado(nome: "Comida Congelada", isPreferencia: false),
     Salgado(nome: "Fast Food", isPreferencia: false),
     Salgado(nome: "Comida Árabe", isPreferencia: false),

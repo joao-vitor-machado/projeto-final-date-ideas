@@ -1,7 +1,7 @@
+import 'package:date_ideas_app/bloc/firestore/firestore_bloc.dart';
+import 'package:date_ideas_app/bloc/firestore/firestore_event.dart';
+import 'package:date_ideas_app/bloc/firestore/firestore_state.dart';
 import 'package:date_ideas_app/bloc/monitor_signUp/monitor_signup_bloc.dart';
-import 'package:date_ideas_app/bloc/monitor_signUp/monitor_signup_event.dart';
-import 'package:date_ideas_app/bloc/monitor_signUp/monitor_signup_state.dart';
-import 'package:date_ideas_app/bloc/storage/storage_event.dart';
 import 'package:date_ideas_app/view/preferencias_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,8 +12,7 @@ import '../bloc/signUp/signup_bloc.dart';
 import '../bloc/signUp/signup_event.dart';
 import '../bloc/signUp/signup_state.dart';
 import '../bloc/signUp/signup_submission.dart';
-import '../bloc/storage/storage_bloc.dart';
-import '../bloc/storage/storage_state.dart';
+
 import '../model/login_collection.dart';
 import '../model/preferencias/Preferencias_collection.dart';
 import '../widgets/slider_bar_widget.dart';
@@ -22,11 +21,10 @@ class CadastroScreen extends StatelessWidget {
   static const route = "/cadastro";
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final SliderBar sliderBar = SliderBar();
 
   CadastroScreen({Key? key}) : super(key: key);
 
-  SignupCollection signupCollection = SignupCollection();
+  // SignupCollection signupCollection = SignupCollection();
 
   @override
   Widget build(BuildContext context) {
@@ -37,49 +35,46 @@ class CadastroScreen extends StatelessWidget {
         foregroundColor: tema.primary,
         elevation: 0,
       ),
-      body: BlocProvider(
-        create: (context) => SignupBloc(),
-        child: Container(
-            padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-            child: ListView(
-              children: [
-                cabecalho(context, "Bora para um"),
-                cabecalho(context, "DATE?"),
-                loginForm(context),
-              ],
-            )),
-      ),
+      body: Container(
+          padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+          child: ListView(
+            children: [
+              cabecalho(context, "Bora para um"),
+              cabecalho(context, "DATE?"),
+              loginForm(context),
+            ],
+          )),
     );
   }
 
   Widget loginForm(BuildContext context) {
-    return BlocListener<SignupBloc, SignupState>(
-        listener: (context, state) {
-          final formStatus = state.formStatus;
-          if (formStatus is SubmissionFailed) {
-            _showSnackBar(context, formStatus.exception.toString());
-          }
-        },
-        child: Container(
-          padding: EdgeInsets.fromLTRB(0, 25, 0, 25),
-          child: Form(
-            key: formKey,
-            child: Column(
-              children: [
-                titulo(context, "Nome"),
-                nameFormField(context),
-                titulo(context, "Idade"),
-                sliderBar,
-                titulo(context, "Email"),
-                usernameFormField(context),
-                titulo(context, "Senha"),
-                passwordFormField(context),
-                BlocBuilder<StorageBloc, StorageState>(
-                    builder: (((context, state) => submitButton(context)))),
-              ],
-            ),
-          ),
-        ));
+    return BlocBuilder<SignupBloc, SignupState>(
+        // listener: (context, state) {
+        //   final formStatus = state.formStatus;
+        //   if (formStatus is SubmissionFailed) {
+        //     _showSnackBar(context, formStatus.exception.toString());
+        //   }
+        // },
+        builder: (context, state) => Container(
+              padding: EdgeInsets.fromLTRB(0, 25, 0, 25),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    titulo(context, "Nome"),
+                    nameFormField(context),
+                    titulo(context, "Idade"),
+                    SliderBar(),
+                    titulo(context, "Email"),
+                    usernameFormField(context),
+                    titulo(context, "Senha"),
+                    passwordFormField(context),
+                    BlocBuilder<FirestoreBloc, FirestoreState>(
+                        builder: (((context, state) => submitButton(context)))),
+                  ],
+                ),
+              ),
+            ));
   }
 
   Widget nameFormField(BuildContext context) {
@@ -203,14 +198,11 @@ class CadastroScreen extends StatelessWidget {
               ),
               onPressed: () {
                 if (formKey.currentState!.validate()) {
-                  context.read<SignupBloc>().add(
-                      SignupSubmitted(data: context.read<SignupBloc>().state));
-                  context.read<AuthBloc>().add(RegisterUser(
-                        username: context.read<SignupBloc>().state.username,
-                        password: context.read<SignupBloc>().state.password,
-                      ));
-                  BlocProvider.of<StorageBloc>(context).add(SubmitEvent(
-                      signupState: context.read<SignupBloc>().state));
+                  BlocProvider.of<AuthBloc>(context).add(RegisterUser(
+                    username: context.read<SignupBloc>().state.username,
+                    password: context.read<SignupBloc>().state.password,
+                  ));
+
                   Navigator.pushNamed(context, PreferenciasScreen.route);
                 }
               },

@@ -1,3 +1,4 @@
+import 'package:date_ideas_app/provider/firebase_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../model/login.dart';
@@ -34,6 +35,7 @@ class FirebaseAuthenticationService {
   }
 
   Future<void> signOut() async {
+    FirestoreServer.helper.uid = null;
     return await _firebaseAuth.signOut();
   }
 }

@@ -277,7 +277,7 @@ class EditarPreferenciasScreen extends StatelessWidget {
         PreferenciasCollection preferencias = PreferenciasCollection();
 
         for (int i = 0; i < preferenciasList.length; i++) {
-          preferencias.insertPreferenciaOfId(i.toString(), preferenciasList[i]);
+          preferencias.updatePreferenciaOfId(i.toString(), preferenciasList[i]);
           print(preferenciasList[i].nome);
         }
 

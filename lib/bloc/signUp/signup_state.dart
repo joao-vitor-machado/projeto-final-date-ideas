@@ -16,7 +16,7 @@ class SignupState {
 
   SignupState({
     this.name = "",
-    this.age = 0,
+    this.age = 10,
     this.username = "",
     this.password = "",
     this.formStatus = const InitialFormStatus(),
@@ -39,7 +39,7 @@ class SignupState {
   }
 
   Map toMap() {
-    var map = Map<String, dynamic>();
+    var map = Map();
     map["name"] = name;
     map["age"] = age;
     // map["username"] = username;

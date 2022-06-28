@@ -27,12 +27,13 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       //password updated
     } else if (event is SignupPasswordChanged) {
       emit(state.copyWith(password: event.password));
-
-      //form submitted
-    } else if (event is SignupSubmitted) {
-      emit(state.copyWith(formStatus: FormSubmitting()));
-      RestServer.helper.insertSignupData(state);
     }
+
+    //   //form submitted
+    // } else if (event is SignupSubmitted) {
+    //   emit(state.copyWith(formStatus: FormSubmitting()));
+    //   RestServer.helper.insertSignupData(state);
+    // }
 
     try {
       emit(state.copyWith(formStatus: SubmissionSuccess()));

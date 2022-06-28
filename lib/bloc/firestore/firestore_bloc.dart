@@ -21,7 +21,11 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
       FirestoreServer.helper.preferenciasUser =
           await FirestoreServer.helper.getPreferencia();
 
-      print(FirestoreServer.helper.preferenciasUser);
+      // print(FirestoreServer.helper.preferenciasUser);
+    });
+
+    on<CriarUser>((event, emit) async {
+      FirestoreServer.helper.insereUser(event.signupState);
     });
   }
 }

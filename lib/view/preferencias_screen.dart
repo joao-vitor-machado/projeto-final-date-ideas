@@ -4,8 +4,14 @@ import 'package:date_ideas_app/bloc/bebidas_alcoolicas/bebidas_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../bloc/firestore/firestore_bloc.dart';
+import '../bloc/firestore/firestore_event.dart';
 import '../bloc/generos/generos_bloc.dart';
 import '../bloc/generos/generos_state.dart';
+import '../bloc/signUp/signup_bloc.dart';
+import '../model/mock/preferencias_mock.dart';
+import '../model/preferencias/Preferencia.dart';
+import '../model/preferencias/Preferencias_collection.dart';
 import '../widgets/checkbox_widget.dart';
 import '../widgets/drop_down_widget.dart';
 import '../widgets/widget_radio_button_bebidas.dart';
@@ -241,6 +247,22 @@ class PreferenciasScreen extends StatelessWidget {
         // if (formKey.currentState!.validate()) {
         //   formKey.currentState!.save();
         // }
+        List<Preferencia> preferenciasList = PreferenciasMock.preferencias;
+        PreferenciasCollection preferencias = PreferenciasCollection();
+
+        for (int i = 0; i < preferenciasList.length; i++) {
+          preferencias.insertPreferenciaOfId(i.toString(), preferenciasList[i]);
+          print(preferenciasList[i].nome);
+        }
+
+        // if (formKey.currentState!.validate()) {
+        //   // formKey.currentState!.save();
+
+        // }
+        BlocProvider.of<FirestoreBloc>(context)
+            .add(CriarUser(signupState: context.read<SignupBloc>().state));
+        BlocProvider.of<FirestoreBloc>(context)
+            .add(CriarPreferencias(preferencias: preferencias));
       },
     );
   }

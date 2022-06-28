@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../provider/firebase_auth.dart';
 import '../../provider/firebase_firestore.dart';
 import 'auth_event.dart';
@@ -19,13 +18,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(Unauthenticated());
       } else {
         FirestoreServer.helper.uid = event.user!.uuid;
+        print("Autenticado!" + FirestoreServer.helper.uid!);
         emit(Authenticated(user: event.user!));
       }
     });
     on<RegisterUser>((event, emit) async {
       try {
-        await _authenticationService.createUserWithEmailAndPassword(
+        var uid = await _authenticationService.createUserWithEmailAndPassword(
             event.username, event.password);
+        FirestoreServer.helper.uid = uid!.uuid;
       } catch (e) {
         emit(AuthError(message: "Impossível Registrar: ${e.toString()}"));
       }

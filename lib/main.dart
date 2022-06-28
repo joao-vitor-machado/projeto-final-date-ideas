@@ -1,17 +1,14 @@
 import 'package:date_ideas_app/bloc/firestore/firestore_bloc.dart';
 import 'package:date_ideas_app/bloc/bebidas_alcoolicas/bebidas_bloc.dart';
 import 'package:date_ideas_app/bloc/monitor_signUp/monitor_signup_bloc.dart';
-import 'package:date_ideas_app/bloc/storage/storage_bloc.dart';
+import 'package:date_ideas_app/bloc/signUp/signup_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'bloc/auth/auth_bloc.dart';
 import 'bloc/auth/auth_state.dart';
 import 'bloc/generos/generos_bloc.dart';
-import 'bloc/slider/slider_bloc.dart';
-import 'bloc/slider/slider_state.dart';
 import 'view/cadastro_screen.dart';
 import 'view/editar_perfil_screen.dart';
 import 'view/editar_preferencias_screen.dart';
@@ -23,13 +20,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MultiBlocProvider(providers: [
-    BlocProvider<SliderBloc>(
-      create: (_) => SliderBloc(SliderState()),
-    ),
+    BlocProvider<SignupBloc>(create: (_) => SignupBloc()),
     BlocProvider(create: (_) => AuthBloc()),
     BlocProvider(create: (_) => BebidasBloc()),
     BlocProvider(create: (_) => GenerosBloc()),
-    BlocProvider(create: (_) => StorageBloc()),
     BlocProvider<FirestoreBloc>(create: (_) => FirestoreBloc()),
     BlocProvider<MonitorSignupBloc>(create: (_) => MonitorSignupBloc()),
   ], child: const MyApp()));
