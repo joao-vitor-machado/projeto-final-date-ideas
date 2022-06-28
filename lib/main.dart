@@ -1,3 +1,4 @@
+import 'package:date_ideas_app/bloc/firestore/firestore_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,10 +19,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MultiBlocProvider(providers: [
-    BlocProvider<SliderBloc>(
-      create: (_) => SliderBloc(SliderState()),
-    ),
-    BlocProvider(create: (_) => AuthBloc()),
+    BlocProvider<SliderBloc>(create: (_) => SliderBloc(SliderState())),
+    BlocProvider<AuthBloc>(create: (_) => AuthBloc()),
+    BlocProvider<FirestoreBloc>(create: (_) => FirestoreBloc()),
   ], child: const MyApp()));
 }
 

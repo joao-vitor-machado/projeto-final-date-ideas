@@ -1,4 +1,11 @@
+import 'package:date_ideas_app/provider/firebase_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../bloc/firestore/firestore_bloc.dart';
+import '../bloc/firestore/firestore_event.dart';
+import '../model/mock/preferencias_mock.dart';
+import '../model/preferencias/Preferencia.dart';
+import '../model/preferencias/Preferencias_collection.dart';
 import '../widgets/checkbox_widget.dart';
 import '../widgets/drop_down_widget.dart';
 import '../widgets/radio_button_widget.dart';
@@ -221,7 +228,7 @@ class EditarPreferenciasScreen extends StatelessWidget {
 
     return ElevatedButton(
       child: Container(
-        width: 100,
+        width: MediaQuery.of(context).size.width * 0.8,
         height: 20,
         child: Row(
           children: [
@@ -242,9 +249,21 @@ class EditarPreferenciasScreen extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        if (formKey.currentState!.validate()) {
-          formKey.currentState!.save();
+        List<Preferencia> preferenciasList = PreferenciasMock.preferencias;
+        PreferenciasCollection preferencias = PreferenciasCollection();
+
+        for (int i = 0; i < preferenciasList.length; i++) {
+          preferencias.insertPreferenciaOfId(i.toString(), preferenciasList[i]);
+          print(preferenciasList[i].nome);
         }
+
+        // if (formKey.currentState!.validate()) {
+        //   // formKey.currentState!.save();
+
+        // }
+        BlocProvider.of<FirestoreBloc>(context)
+            .add(CriarPreferencias(preferencias: preferencias));
+        print(FirestoreServer.helper.uid);
       },
     );
   }
