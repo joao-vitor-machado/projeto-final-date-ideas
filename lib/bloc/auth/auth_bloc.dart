@@ -13,12 +13,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       add(AuthServerEvent(event));
     });
 
-    on<AuthServerEvent>((event, emit) {
+    on<AuthServerEvent>((event, emit) async {
       if (event.user == null) {
         emit(Unauthenticated());
       } else {
         FirestoreServer.helper.uid = event.user!.uuid;
-        print("Autenticado!" + FirestoreServer.helper.uid!);
         emit(Authenticated(user: event.user!));
       }
     });

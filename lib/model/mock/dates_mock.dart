@@ -123,4 +123,6 @@ class DateMock {
       atividades: ["Triplo mortal carpado"],
     ),
   ];
+
+  static final DateApp date = dates[0];
 }

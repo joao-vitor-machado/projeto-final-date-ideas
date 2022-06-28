@@ -1,3 +1,4 @@
+import 'package:date_ideas_app/model/date.dart';
 import 'package:date_ideas_app/model/preferencias/Preferencias_collection.dart';
 
 import '../signUp/signup_state.dart';
@@ -23,3 +24,11 @@ class CriarUser extends FirestoreEvent {
 
   CriarUser({required this.signupState});
 }
+
+class CriarDate extends FirestoreEvent {
+  DateApp date;
+
+  CriarDate({required this.date});
+}
+
+class GetDates extends FirestoreEvent {}

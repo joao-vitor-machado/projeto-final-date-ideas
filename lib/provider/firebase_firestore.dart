@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_ideas_app/bloc/signUp/signup_state.dart';
+import 'package:date_ideas_app/model/date.dart';
 import 'package:date_ideas_app/model/login_collection.dart';
 
 import '../model/login.dart';
@@ -20,6 +21,9 @@ class FirestoreServer {
   // Ponto de acesso com o servidor
   final CollectionReference preferencias =
       FirebaseFirestore.instance.collection("preferencias");
+
+  final CollectionReference dates =
+      FirebaseFirestore.instance.collection("dates");
 
   final CollectionReference users =
       FirebaseFirestore.instance.collection("users");
@@ -115,5 +119,53 @@ class FirestoreServer {
 
   Stream get stream {
     return users.doc(uid).snapshots().map(_usersListFromSnapshot);
+  }
+
+  Future<DateApp> getDate(dateID) async {
+    DocumentSnapshot doc = await dates
+        .doc(uid! + "Dates")
+        .collection("meus_dates")
+        .doc(dateID)
+        .get();
+    DateApp date = DateApp.fromMap(doc.data());
+    return date;
+  }
+
+  Future<List<DateApp>> getAllDates() async {
+    List<DateApp> listaDates = [];
+
+    QuerySnapshot doc =
+        await dates.doc(uid! + "Dates").collection("meus_dates").get();
+
+    for (var documento in doc.docs) {
+      listaDates.add(DateApp.fromMap(documento.data()));
+    }
+    return listaDates;
+  }
+
+  Future<int> insereDate(DateApp date) async {
+    final map = date.toMap();
+    await dates.doc(uid! + "Dates").collection("meus_dates").doc().set({
+      "nome": map["nome"],
+      "data": map["data"],
+      "salgados": map["salgados"],
+      "doces": map["doces"],
+      "bebidas": map["bebidas"],
+      "atividades": map["atividades"],
+    });
+    return 42;
+  }
+
+  Future<int> updateDate(dateID, DateApp dateApp) async {
+    final map = dateApp.toMap();
+    await dates.doc(uid! + "Dates").update({
+      "nome": map["nome"],
+      "data": map["data"],
+      "salgados": map["salgados"],
+      "doces": map["doces"],
+      "bebidas": map["bebidas"],
+      "atividades": map["atividades"],
+    });
+    return 42;
   }
 }

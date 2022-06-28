@@ -1,6 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:date_ideas_app/bloc/auth/auth_bloc.dart';
+import 'package:date_ideas_app/bloc/auth/auth_state.dart';
 import 'package:date_ideas_app/bloc/firestore/firestore_bloc.dart';
 import 'package:date_ideas_app/bloc/firestore/firestore_event.dart';
+import 'package:date_ideas_app/bloc/firestore/firestore_state.dart';
+import 'package:date_ideas_app/bloc/signUp/signup_bloc.dart';
+import 'package:date_ideas_app/bloc/signUp/signup_state.dart';
+import 'package:date_ideas_app/model/date.dart';
+import 'package:date_ideas_app/provider/firebase_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../model/mock/dates_mock.dart';
@@ -17,47 +24,58 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final tema = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      drawer: const DrawerWidget(),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        foregroundColor: tema.primary,
-        elevation: 0,
-      ),
-      body: GestureDetector(
-        onHorizontalDragEnd: (e) => const DrawerWidget(),
-        child: SingleChildScrollView(
-          child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                saudacoes(context),
-                datesDeHoje(context),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 20.0, right: 20, bottom: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Próximos Dates:",
-                        style: TextStyle(
-                            color: tema.primary,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      novoDateButton(context),
-                    ],
+    return BlocBuilder<FirestoreBloc, FirestoreState>(
+        builder: ((context, state) {
+      BlocProvider.of<FirestoreBloc>(context).add(GetDates());
+
+      List<DateApp> dates = [];
+
+      if (state is Dates) {
+        dates = state.dates;
+      }
+
+      return Scaffold(
+        drawer: const DrawerWidget(),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          foregroundColor: tema.primary,
+          elevation: 0,
+        ),
+        body: GestureDetector(
+          onHorizontalDragEnd: (e) => const DrawerWidget(),
+          child: SingleChildScrollView(
+            child: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  saudacoes(context),
+                  datesDeHoje(context),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 20.0, right: 20, bottom: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Próximos Dates:",
+                          style: TextStyle(
+                              color: tema.primary,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        novoDateButton(context),
+                      ],
+                    ),
                   ),
-                ),
-                dateList(context),
-              ],
+                  dateList(context, dates),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    }));
   }
 
   newDateDialog(BuildContext context) {
@@ -97,10 +115,16 @@ class MainScreen extends StatelessWidget {
   Widget saudacoes(BuildContext context) {
     final tema = Theme.of(context).colorScheme;
 
+    var name = "";
+
+    if (BlocProvider.of<SignupBloc>(context).state is Authenticated) {
+      name = BlocProvider.of<SignupBloc>(context).state.name;
+    }
+
     return Padding(
       padding: const EdgeInsets.only(left: 20.0),
       child: Text(
-        "Olá, Fulano!",
+        ("Olá " + name),
         style: TextStyle(
             color: tema.primary,
             fontFamily: "Roboto",
@@ -147,13 +171,12 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-  Widget dateList(BuildContext context) {
+  Widget dateList(BuildContext context, List<DateApp> dateList) {
     return Container(
       height: 400,
       child: ListView(
-        children: DateMock.dates
-            .map((element) => DateTile(dataApp: element))
-            .toList(),
+        children:
+            dateList.map((element) => DateTile(dataApp: element)).toList(),
       ),
     );
   }

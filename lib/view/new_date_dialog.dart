@@ -1,4 +1,8 @@
+import 'package:date_ideas_app/bloc/firestore/firestore_bloc.dart';
+import 'package:date_ideas_app/bloc/firestore/firestore_event.dart';
+import 'package:date_ideas_app/model/mock/dates_mock.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widgets/date_picker.dart';
 import '../widgets/number_picker.dart';
@@ -175,6 +179,9 @@ class NewDateDialog extends StatelessWidget {
           "Criar",
           style: TextStyle(color: tema.secondary),
         ),
-        onPressed: () {});
+        onPressed: () {
+          BlocProvider.of<FirestoreBloc>(context)
+              .add(CriarDate(date: DateMock.date));
+        });
   }
 }
