@@ -49,7 +49,7 @@ class MainScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   saudacoes(context),
-                  datesDeHoje(context),
+                  datesDeHoje(context, dates),
                   Padding(
                     padding:
                         const EdgeInsets.only(left: 20.0, right: 20, bottom: 8),
@@ -86,22 +86,21 @@ class MainScreen extends StatelessWidget {
         });
   }
 
-  Widget renderDateCards(BuildContext context) {
+  Widget renderDateCards(BuildContext context, List<DateApp> dates) {
     final screen = MediaQuery.of(context).size;
 
     List<int> indexes = [];
-    for (int i = 0; i < DateMock.dates.length; i++) {
-      if (DateMock.dates[i].data.month == DateTime.now().month &&
-          DateMock.dates[i].data.day == DateTime.now().day) {
+    for (int i = 0; i < dates.length; i++) {
+      if (dates[i].data.month == DateTime.now().month &&
+          dates[i].data.day == DateTime.now().day) {
         indexes.add(i);
       }
     }
     if (indexes.isNotEmpty) {
       return CarouselSlider(
           options: CarouselOptions(autoPlay: false),
-          items: indexes
-              .map((index) => DateCard(dateApp: DateMock.dates[index]))
-              .toList());
+          items:
+              indexes.map((index) => DateCard(dateApp: dates[index])).toList());
     } else {
       return Container(
         height: screen.height * 0.3,
@@ -134,7 +133,7 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-  Widget datesDeHoje(BuildContext context) {
+  Widget datesDeHoje(BuildContext context, List<DateApp> dates) {
     final tema = Theme.of(context).colorScheme;
 
     return Column(
@@ -152,7 +151,7 @@ class MainScreen extends StatelessWidget {
             ),
           ),
         ),
-        renderDateCards(context),
+        renderDateCards(context, dates),
       ],
     );
   }
