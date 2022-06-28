@@ -1,5 +1,5 @@
 abstract class MonitorSignupEvent {}
 
-class AskNewSignupList extends MonitorSignupEvent {}
+class CriarUsersList extends MonitorSignupEvent {}
 
-class UpdateSignupList extends MonitorSignupEvent {}
+class UpdateUsersList extends MonitorSignupEvent {}

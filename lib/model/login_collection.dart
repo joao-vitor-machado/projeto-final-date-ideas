@@ -51,4 +51,34 @@ class SignupCollection {
     idList.add(id);
     signupList.add(signupData);
   }
+
+  List<Map> userFromListToMap() {
+    List<Map> list = [];
+
+    signupList.forEach((signupData) {
+      list.add(signupData.toMap());
+    });
+
+    return list;
+  }
+
+  SignupCollection.fromMap(map) {
+    idList = [];
+    List usersListMap = map["userList"];
+
+    signupList = [];
+    int index = 0;
+    usersListMap.forEach((userMap) {
+      idList.add(index);
+      signupList.add(SignupData.fromMap(userMap));
+    });
+  }
+
+  Map toMap() {
+    Map map = Map();
+
+    map["userList"] = userFromListToMap();
+
+    return map;
+  }
 }

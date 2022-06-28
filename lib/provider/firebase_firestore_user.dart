@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+/*import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_ideas_app/model/login.dart';
 import '../model/login_collection.dart';
 
@@ -68,4 +68,4 @@ class FirestoreServer {
         .snapshots()
         .map(_usersListFromSnapshot);
   }
-}
+}*/

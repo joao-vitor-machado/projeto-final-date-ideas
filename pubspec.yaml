@@ -43,11 +43,7 @@ dependencies:
   flutter_bloc: ^8.0.1
   bloc: ^8.0.3
   dio: ^4.0.6
-<<<<<<< HEAD
   cloud_firestore: ^3.1.18
-=======
-  cloud_firestore: ^3.1.17
->>>>>>> a888e31de7de69369117d6c888f9a77d5ac7bd3c
 
 dev_dependencies:
   flutter_test:

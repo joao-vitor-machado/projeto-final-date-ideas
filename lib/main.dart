@@ -1,5 +1,7 @@
 import 'package:date_ideas_app/bloc/firestore/firestore_bloc.dart';
 import 'package:date_ideas_app/bloc/bebidas_alcoolicas/bebidas_bloc.dart';
+import 'package:date_ideas_app/bloc/monitor_signUp/monitor_signup_bloc.dart';
+import 'package:date_ideas_app/bloc/storage/storage_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,7 +29,9 @@ void main() async {
     BlocProvider(create: (_) => AuthBloc()),
     BlocProvider(create: (_) => BebidasBloc()),
     BlocProvider(create: (_) => GenerosBloc()),
+    BlocProvider(create: (_) => StorageBloc()),
     BlocProvider<FirestoreBloc>(create: (_) => FirestoreBloc()),
+    BlocProvider<MonitorSignupBloc>(create: (_) => MonitorSignupBloc()),
   ], child: const MyApp()));
 }
 
