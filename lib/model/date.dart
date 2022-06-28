@@ -1,3 +1,9 @@
+import 'package:date_ideas_app/model/preferencias/Atividade.dart';
+import 'package:date_ideas_app/model/preferencias/Bebida.dart';
+import 'package:date_ideas_app/model/preferencias/Salgado.dart';
+
+import 'preferencias/Doce.dart';
+
 class DateApp {
   final String nome;
   final DateTime data;

@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 import 'package:date_ideas_app/bloc/firestore/firestore_bloc.dart';
-=======
 import 'package:date_ideas_app/bloc/bebidas_alcoolicas/bebidas_bloc.dart';
->>>>>>> e4ad8582610be9a313e261b781713e41e74df5b1
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,18 +21,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MultiBlocProvider(providers: [
-<<<<<<< HEAD
     BlocProvider<SliderBloc>(create: (_) => SliderBloc(SliderState())),
     BlocProvider<AuthBloc>(create: (_) => AuthBloc()),
     BlocProvider<FirestoreBloc>(create: (_) => FirestoreBloc()),
-=======
-    BlocProvider<SliderBloc>(
-      create: (_) => SliderBloc(SliderState()),
-    ),
-    BlocProvider(create: (_) => AuthBloc()),
-    BlocProvider(create: (_) => BebidasBloc()),
-    BlocProvider(create: (_) => GenerosBloc()),
->>>>>>> e4ad8582610be9a313e261b781713e41e74df5b1
+    BlocProvider<BebidasBloc>(create: (_) => BebidasBloc()),
+    BlocProvider<GenerosBloc>(create: (_) => GenerosBloc()),
   ], child: const MyApp()));
 }
 

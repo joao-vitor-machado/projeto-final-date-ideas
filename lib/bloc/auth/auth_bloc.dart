@@ -40,14 +40,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 "Impossível Logar com ${event.username}: ${e.toString()}"));
       }
     });
-    on<LoginAnonymousUser>((event, emit) async {
-      try {
-        await _authenticationService.signInAnonimo();
-      } catch (e) {
-        emit(AuthError(
-            message: "Impossível Acessar Anonimamente: ${e.toString()}"));
-      }
-    });
     on<Logout>((event, emit) async {
       try {
         await _authenticationService.signOut();

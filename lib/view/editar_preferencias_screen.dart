@@ -287,7 +287,6 @@ class EditarPreferenciasScreen extends StatelessWidget {
         // }
         BlocProvider.of<FirestoreBloc>(context)
             .add(CriarPreferencias(preferencias: preferencias));
-        print(FirestoreServer.helper.uid);
       },
     );
   }

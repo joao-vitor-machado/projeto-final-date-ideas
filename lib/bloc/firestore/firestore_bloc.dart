@@ -5,10 +5,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
   FirestoreBloc() : super(InsertState()) {
-    on<CriarPreferencias>((event, emit) =>
-        {FirestoreServer.helper.inserePreferencia(event.preferencias)});
+    on<CriarPreferencias>((event, emit) async {
+      FirestoreServer.helper.inserePreferencia(event.preferencias);
+      FirestoreServer.helper.preferenciasUser =
+          await FirestoreServer.helper.getPreferencia();
+    });
 
-    on<UpdatePreferencias>((event, emit) =>
-        {FirestoreServer.helper.inserePreferencia(event.preferencias)});
+    on<UpdatePreferencias>((event, emit) async {
+      FirestoreServer.helper.inserePreferencia(event.preferencias);
+      FirestoreServer.helper.preferenciasUser =
+          await FirestoreServer.helper.getPreferencia();
+    });
+
+    on<GetPreferencias>((event, emit) async {
+      FirestoreServer.helper.preferenciasUser =
+          await FirestoreServer.helper.getPreferencia();
+
+      print(FirestoreServer.helper.preferenciasUser);
+    });
   }
 }

@@ -1,3 +1,8 @@
+import 'package:date_ideas_app/model/preferencias/Atividade.dart';
+import 'package:date_ideas_app/model/preferencias/Bebida.dart';
+import 'package:date_ideas_app/model/preferencias/Salgado.dart';
+
+import 'Doce.dart';
 import 'Preferencia.dart';
 
 class PreferenciasCollection {
@@ -80,6 +85,7 @@ class PreferenciasCollection {
 
   PreferenciasCollection.fromMap(map) {
     idList = [];
+    print(map);
     List preferencesListMap = map["prefList"];
 
     prefList = [];
@@ -96,5 +102,53 @@ class PreferenciasCollection {
     map["prefList"] = preferenciasFromListToMap();
 
     return map;
+  }
+
+  List<Salgado> getSalgados() {
+    List<Salgado> salgados = [];
+
+    prefList.forEach((preferencia) {
+      if (preferencia is Salgado) {
+        salgados.add(preferencia);
+      }
+    });
+
+    return salgados;
+  }
+
+  List<Doce> getDoces() {
+    List<Doce> doces = [];
+
+    prefList.forEach((preferencia) {
+      if (preferencia is Doce) {
+        doces.add(preferencia);
+      }
+    });
+
+    return doces;
+  }
+
+  List<Bebida> getBebidas() {
+    List<Bebida> bebidas = [];
+
+    prefList.forEach((preferencia) {
+      if (preferencia is Bebida) {
+        bebidas.add(preferencia);
+      }
+    });
+
+    return bebidas;
+  }
+
+  List<Atividade> getAtividades() {
+    List<Atividade> atividades = [];
+
+    prefList.forEach((preferencia) {
+      if (preferencia is Atividade) {
+        atividades.add(preferencia);
+      }
+    });
+
+    return atividades;
   }
 }

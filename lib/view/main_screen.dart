@@ -1,5 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:date_ideas_app/bloc/firestore/firestore_bloc.dart';
+import 'package:date_ideas_app/bloc/firestore/firestore_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../model/mock/dates_mock.dart';
 import '../widgets/date_card.dart';
 import '../widgets/date_tile.dart';

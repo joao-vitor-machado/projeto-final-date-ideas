@@ -13,3 +13,5 @@ class UpdatePreferencias extends FirestoreEvent {
 
   UpdatePreferencias({required this.preferencias});
 }
+
+class GetPreferencias extends FirestoreEvent {}

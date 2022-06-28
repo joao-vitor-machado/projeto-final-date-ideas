@@ -17,7 +17,7 @@ class FirestoreServer {
   final CollectionReference preferencias =
       FirebaseFirestore.instance.collection("preferencias");
 
-  Future<PreferenciasCollection> getPreferencia(preferenciasID) async {
+  Future<PreferenciasCollection> getPreferencia() async {
     DocumentSnapshot document = await preferencias.doc(uid).get();
     PreferenciasCollection preferenciasRet =
         PreferenciasCollection.fromMap(document.data());

@@ -19,8 +19,18 @@ class Preferencia {
   }
 
   Preferencia.fromMap(map) {
-    _nome = map['nome'];
-    _isPreferencia = map['isPreferencia'];
+    nome = map['nome'];
+    isPreferencia = map['isPreferencia'];
+
+    if (map["categoria"] == "salgado") {
+      Salgado(nome: nome, isPreferencia: isPreferencia);
+    } else if (map["categoria"] == "doce") {
+      Doce(nome: nome, isPreferencia: isPreferencia);
+    } else if (map["categoria"] == "bebida") {
+      Bebida(nome: nome, isPreferencia: isPreferencia);
+    } else if (map["categoria"] == "atividade") {
+      Atividade(nome: nome, isPreferencia: isPreferencia);
+    }
   }
 
   Map toMap() {
