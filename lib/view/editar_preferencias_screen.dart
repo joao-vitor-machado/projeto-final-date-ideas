@@ -6,9 +6,14 @@ import '../bloc/firestore/firestore_event.dart';
 import '../model/mock/preferencias_mock.dart';
 import '../model/preferencias/Preferencia.dart';
 import '../model/preferencias/Preferencias_collection.dart';
+import '../bloc/bebidas_alcoolicas/bebidas_bloc.dart';
+import '../bloc/bebidas_alcoolicas/bebidas_state.dart';
+import '../bloc/generos/generos_bloc.dart';
+import '../bloc/generos/generos_state.dart';
 import '../widgets/checkbox_widget.dart';
 import '../widgets/drop_down_widget.dart';
-import '../widgets/radio_button_widget.dart';
+import '../widgets/widget_radio_button_bebidas.dart';
+import '../widgets/widget_radio_button_generos.dart';
 
 class EditarPreferenciasScreen extends StatelessWidget {
   static const route = "/editar_preferencias";
@@ -18,8 +23,8 @@ class EditarPreferenciasScreen extends StatelessWidget {
   EditarPreferenciasScreen({Key? key}) : super(key: key);
 
   final CheckBox checkBox = const CheckBox();
-  final RadioButton radioButton1 = RadioButton();
-  final RadioButton radioButton2 = RadioButton();
+  final RadioButtonBebidas radioButton1 = RadioButtonBebidas();
+  final RadioButtonGeneros radioButton2 = RadioButtonGeneros();
   final DropDown dropDown = const DropDown();
 
   @override
@@ -95,7 +100,15 @@ class EditarPreferenciasScreen extends StatelessWidget {
                   subtopicos(context, "Água"),
                   subtopicos(context, "Suco"),
                   subtopicos(context, "Refrigerante"),
-                  enableCheckBox(context)
+                  BlocBuilder<BebidasBloc, BebidasState>(
+                      builder: (context, state) {
+                    if (state is BebidasStateSim) {
+                      return enableRadioButton(context, radioButton1.alcohol);
+                    }
+                    return Container(
+                      height: 0,
+                    );
+                  }),
                 ],
               ),
             ),
@@ -141,10 +154,21 @@ class EditarPreferenciasScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            topicos(context, "Gêneros Favoritos"),
-            Container(
-              child: dropDown,
-            ),
+            BlocBuilder<GenerosBloc, GenerosState>(builder: (context, state) {
+              if (state is GenerosStateSim) {
+                return Column(
+                  children: [
+                    topicos(context, "Gêneros Favoritos"),
+                    Container(
+                      child: dropDown,
+                    ),
+                  ],
+                );
+              }
+              return Container(
+                height: 0,
+              );
+            }),
             const SizedBox(
               height: 20,
             ),
@@ -208,7 +232,7 @@ class EditarPreferenciasScreen extends StatelessWidget {
     );
   }
 
-  Widget enableCheckBox(BuildContext context) {
+  Widget enableRadioButton(BuildContext context, Enum radioButton) {
     final tema = Theme.of(context).colorScheme;
 
     return Column(

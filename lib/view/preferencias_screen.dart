@@ -1,8 +1,15 @@
+import 'package:date_ideas_app/bloc/bebidas_alcoolicas/bebidas_bloc.dart';
+import 'package:date_ideas_app/bloc/bebidas_alcoolicas/bebidas_event.dart';
+import 'package:date_ideas_app/bloc/bebidas_alcoolicas/bebidas_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../bloc/generos/generos_bloc.dart';
+import '../bloc/generos/generos_state.dart';
 import '../widgets/checkbox_widget.dart';
 import '../widgets/drop_down_widget.dart';
-import '../widgets/radio_button_widget.dart';
+import '../widgets/widget_radio_button_bebidas.dart';
+import '../widgets/widget_radio_button_generos.dart';
 import 'main_screen.dart';
 
 class PreferenciasScreen extends StatelessWidget {
@@ -13,8 +20,8 @@ class PreferenciasScreen extends StatelessWidget {
   PreferenciasScreen({Key? key}) : super(key: key);
 
   final CheckBox checkBox = const CheckBox();
-  final RadioButton radioButton1 = RadioButton();
-  final RadioButton radioButton2 = RadioButton();
+  final RadioButtonBebidas radioButton1 = RadioButtonBebidas();
+  final RadioButtonGeneros radioButton2 = RadioButtonGeneros();
   final DropDown dropDown = const DropDown();
 
   @override
@@ -60,7 +67,15 @@ class PreferenciasScreen extends StatelessWidget {
                   subtopicos(context, "Água"),
                   subtopicos(context, "Suco"),
                   subtopicos(context, "Refrigerante"),
-                  enableCheckBox(context)
+                  BlocBuilder<BebidasBloc, BebidasState>(
+                      builder: (context, state) {
+                    if (state is BebidasStateSim) {
+                      return enableRadioButton(context, radioButton1.alcohol);
+                    }
+                    return Container(
+                      height: 0,
+                    );
+                  }),
                 ],
               ),
             ),
@@ -106,10 +121,21 @@ class PreferenciasScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            topicos(context, "Gêneros Favoritos"),
-            Container(
-              child: dropDown,
-            ),
+            BlocBuilder<GenerosBloc, GenerosState>(builder: (context, state) {
+              if (state is GenerosStateSim) {
+                return Column(
+                  children: [
+                    topicos(context, "Gêneros Favoritos"),
+                    Container(
+                      child: dropDown,
+                    ),
+                  ],
+                );
+              }
+              return Container(
+                height: 0,
+              );
+            }),
             const SizedBox(
               height: 20,
             ),
@@ -173,17 +199,13 @@ class PreferenciasScreen extends StatelessWidget {
     );
   }
 
-  Widget enableCheckBox(BuildContext context) {
+  Widget enableRadioButton(BuildContext context, Enum radioButton) {
     final tema = Theme.of(context).colorScheme;
-
     return Column(
       children: [
         subtopicos(context, "Cerveja"),
         subtopicos(context, "Vinho"),
         subtopicos(context, "Gin&Tônica"),
-        const SizedBox(
-          height: 20,
-        ),
       ],
     );
   }
