@@ -209,8 +209,8 @@ class CadastroScreen extends StatelessWidget {
                         username: context.read<SignupBloc>().state.username,
                         password: context.read<SignupBloc>().state.password,
                       ));
-                  BlocProvider.of<StorageBloc>(context)
-                      .add(SubmitEvent(signupCollection: signupCollection));
+                  BlocProvider.of<StorageBloc>(context).add(SubmitEvent(
+                      signupState: context.read<SignupBloc>().state));
                   Navigator.pushNamed(context, PreferenciasScreen.route);
                 }
               },

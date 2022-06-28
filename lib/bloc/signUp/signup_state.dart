@@ -42,8 +42,8 @@ class SignupState {
     var map = Map<String, dynamic>();
     map["name"] = name;
     map["age"] = age;
-    map["username"] = username;
-    map["password"] = password;
+    // map["username"] = username;
+    // map["password"] = password;
 
     return map;
   }

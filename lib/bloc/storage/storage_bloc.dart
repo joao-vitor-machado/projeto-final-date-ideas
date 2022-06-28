@@ -7,7 +7,7 @@ class StorageBloc extends Bloc<StorageEvent, StorageState> {
   StorageBloc() : super(InsertState()) {
     on<SubmitEvent>((event, emit) {
       if (state is InsertState) {
-        FirestoreServer.helper.insereUser(event.signupCollection);
+        FirestoreServer.helper.insereUser(event.signupState);
       }
     });
   }
