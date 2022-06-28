@@ -1,4 +1,10 @@
+import 'package:date_ideas_app/bloc/firestore/firestore_bloc.dart';
+import 'package:date_ideas_app/bloc/firestore/firestore_event.dart';
+import 'package:date_ideas_app/model/mock/preferencias_mock.dart';
+import 'package:date_ideas_app/model/preferencias/Preferencia.dart';
+import 'package:date_ideas_app/model/preferencias/Preferencias_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../model/login.dart';
 import '../widgets/slider_bar_widget.dart';
 

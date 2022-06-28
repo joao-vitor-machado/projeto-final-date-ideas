@@ -1,3 +1,4 @@
+import 'package:date_ideas_app/bloc/firestore/firestore_bloc.dart';
 import 'package:date_ideas_app/bloc/bebidas_alcoolicas/bebidas_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,6 +27,7 @@ void main() async {
     BlocProvider(create: (_) => AuthBloc()),
     BlocProvider(create: (_) => BebidasBloc()),
     BlocProvider(create: (_) => GenerosBloc()),
+    BlocProvider<FirestoreBloc>(create: (_) => FirestoreBloc()),
   ], child: const MyApp()));
 }
 
