@@ -1,3 +1,7 @@
+import 'package:date_ideas_app/bloc/monitor_signUp/monitor_signup_bloc.dart';
+import 'package:date_ideas_app/bloc/monitor_signUp/monitor_signup_event.dart';
+import 'package:date_ideas_app/bloc/monitor_signUp/monitor_signup_state.dart';
+import 'package:date_ideas_app/bloc/storage/storage_event.dart';
 import 'package:date_ideas_app/view/preferencias_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +12,10 @@ import '../bloc/signUp/signup_bloc.dart';
 import '../bloc/signUp/signup_event.dart';
 import '../bloc/signUp/signup_state.dart';
 import '../bloc/signUp/signup_submission.dart';
+import '../bloc/storage/storage_bloc.dart';
+import '../bloc/storage/storage_state.dart';
+import '../model/login_collection.dart';
+import '../model/preferencias/Preferencias_collection.dart';
 import '../widgets/slider_bar_widget.dart';
 
 class CadastroScreen extends StatelessWidget {
@@ -17,6 +25,8 @@ class CadastroScreen extends StatelessWidget {
   final SliderBar sliderBar = SliderBar();
 
   CadastroScreen({Key? key}) : super(key: key);
+
+  SignupCollection signupCollection = SignupCollection();
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +74,8 @@ class CadastroScreen extends StatelessWidget {
                 usernameFormField(context),
                 titulo(context, "Senha"),
                 passwordFormField(context),
-                submitButton(context),
+                BlocBuilder<StorageBloc, StorageState>(
+                    builder: (((context, state) => submitButton(context)))),
               ],
             ),
           ),
@@ -198,6 +209,8 @@ class CadastroScreen extends StatelessWidget {
                         username: context.read<SignupBloc>().state.username,
                         password: context.read<SignupBloc>().state.password,
                       ));
+                  BlocProvider.of<StorageBloc>(context)
+                      .add(SubmitEvent(signupCollection: signupCollection));
                   Navigator.pushNamed(context, PreferenciasScreen.route);
                 }
               },

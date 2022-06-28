@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_ideas_app/model/login_collection.dart';
 
+import '../model/login.dart';
 import '../model/preferencias/Preferencia.dart';
 import '../model/preferencias/Preferencias_collection.dart';
 
@@ -12,10 +14,14 @@ class FirestoreServer {
   // uid do usuário logado
   String? uid;
   PreferenciasCollection? preferenciasUser;
+  SignupCollection? usersCollection;
 
   // Ponto de acesso com o servidor
   final CollectionReference preferencias =
       FirebaseFirestore.instance.collection("preferencias");
+
+  final CollectionReference users =
+      FirebaseFirestore.instance.collection("users");
 
   Future<PreferenciasCollection> getPreferencia() async {
     DocumentSnapshot document = await preferencias.doc(uid).get();
@@ -68,4 +74,51 @@ class FirestoreServer {
   //       .snapshots()
   //       .map(_preferenciasListFromSnapshot);
   // }
+
+  Future<SignupData> getUser(signupId) async {
+    DocumentSnapshot doc =
+        await users.doc(uid).collection("userList").doc(signupId).get();
+    SignupData signupData = SignupData.fromMap(doc.data());
+    return signupData;
+  }
+
+  Future<int> insereUser(SignupCollection signupCollection) async {
+    await users.doc(uid).collection("userList").add({
+      "idList": signupCollection.idList,
+      "signupList": signupCollection.userFromListToMap()
+    });
+    return 42;
+  }
+
+  Future<int> updateUser(signupId, SignupData signupData) async {
+    await users.doc(uid).collection("userList").doc(signupId).update({
+      "nome": signupData.name,
+      "idade": signupData.age,
+    });
+    return 42;
+  }
+
+  SignupCollection _usersListFromSnapshot(QuerySnapshot snapshot) {
+    SignupCollection signupCollection;
+    for (var doc in snapshot.docs) {
+      signupCollection = SignupCollection.fromMap(doc.data());
+
+      return signupCollection;
+    }
+    return SignupCollection();
+  }
+
+  Future<SignupCollection> getSignupList() async {
+    QuerySnapshot snapshot = await users.doc(uid).collection("userList").get();
+
+    return _usersListFromSnapshot(snapshot);
+  }
+
+  Stream get stream {
+    return users
+        .doc(uid)
+        .collection("userList")
+        .snapshots()
+        .map(_usersListFromSnapshot);
+  }
 }
