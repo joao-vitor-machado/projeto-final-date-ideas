@@ -184,7 +184,7 @@ class EditarPerfilScreen extends StatelessWidget {
     final tema = Theme.of(context).colorScheme;
     return ElevatedButton(
       child: Container(
-        width: 100,
+        width: MediaQuery.of(context).size.width * 0.7,
         height: 40,
         child: Row(
           children: const [

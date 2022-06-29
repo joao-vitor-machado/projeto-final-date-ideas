@@ -107,4 +107,52 @@ class DateBuilder {
   set numAtividades(int numAtividades) {
     _numAtividades = numAtividades;
   }
+
+  DateApp regenApp(
+    String newName,
+    DateTime newDate,
+    PreferenciasCollection preferencias,
+    DateApp oldDate,
+  ) {
+    int numSalgados = oldDate.salgados.length;
+    int numDoces = oldDate.doces.length;
+    int numBebidas = oldDate.bebidas.length;
+    int numAtividades = oldDate.atividades.length;
+
+    List<String> salgados = [];
+    for (int i = 0; i < numSalgados; i++) {
+      if (preferencias.prefList[i] is Salgado) {
+        salgados.add(preferencias.prefList[i].nome);
+      }
+    }
+
+    List<String> doces = [];
+    for (int i = 0; i < numDoces; i++) {
+      if (preferencias.prefList[i] is Doce) {
+        doces.add(preferencias.prefList[i].nome);
+      }
+    }
+    List<String> bebidas = [];
+    for (int i = 0; i < numBebidas; i++) {
+      if (preferencias.prefList[i] is Bebida) {
+        bebidas.add(preferencias.prefList[i].nome);
+      }
+    }
+    List<String> atividades = [];
+    for (int i = 0; i < numAtividades; i++) {
+      if (preferencias.prefList[i] is Atividade) {
+        atividades.add(preferencias.prefList[i].nome);
+      }
+    }
+
+    DateApp newDate = DateApp(
+        nome: nome,
+        data: data,
+        salgados: salgados,
+        doces: doces,
+        bebidas: bebidas,
+        atividades: atividades);
+
+    return newDate;
+  }
 }

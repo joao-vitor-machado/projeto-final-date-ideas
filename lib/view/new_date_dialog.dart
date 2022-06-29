@@ -181,7 +181,7 @@ class NewDateDialog extends StatelessWidget {
         ),
         onPressed: () {
           BlocProvider.of<FirestoreBloc>(context)
-              .add(CriarDate(date: DateMock.date));
+              .add(CriarDate(date: DateMock.getDate()));
         });
   }
 }

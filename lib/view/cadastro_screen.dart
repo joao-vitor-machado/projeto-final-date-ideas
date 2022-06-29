@@ -178,7 +178,7 @@ class CadastroScreen extends StatelessWidget {
           ? CircularProgressIndicator()
           : ElevatedButton(
               child: Container(
-                width: 100,
+                width: MediaQuery.of(context).size.width * 0.7,
                 height: 40,
                 child: Row(
                   children: const [

@@ -253,7 +253,7 @@ class EditarPreferenciasScreen extends StatelessWidget {
     return ElevatedButton(
       child: Container(
         width: MediaQuery.of(context).size.width * 0.8,
-        height: 20,
+        height: 40,
         child: Row(
           children: [
             Text(
@@ -272,21 +272,20 @@ class EditarPreferenciasScreen extends StatelessWidget {
           ],
         ),
       ),
-      onPressed: () {
-        List<Preferencia> preferenciasList = PreferenciasMock.preferencias;
+      onPressed: () async {
+        List<Preferencia> preferenciasList =
+            PreferenciasMock.preferenciasAtualizacao;
         PreferenciasCollection preferencias = PreferenciasCollection();
 
         for (int i = 0; i < preferenciasList.length; i++) {
           preferencias.updatePreferenciaOfId(i.toString(), preferenciasList[i]);
-          print(preferenciasList[i].nome);
         }
 
         // if (formKey.currentState!.validate()) {
         //   // formKey.currentState!.save();
 
         // }
-        BlocProvider.of<FirestoreBloc>(context)
-            .add(CriarPreferencias(preferencias: preferencias));
+        // BlocProvider.of<FirestoreBloc>(context).add(GetPreferencias());
       },
     );
   }

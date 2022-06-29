@@ -99,6 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget password(BuildContext context) {
     final tema = Theme.of(context).colorScheme;
     return TextFormField(
+      obscureText: true,
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
